@@ -1,0 +1,11 @@
+{% extends 'billboards/base.html' %} {% block content %}
+<h2>Payment for {{ company.name }}</h2>
+<form method="post">
+  {% csrf_token %}
+  <label for="amount">Amount:</label>
+  <input type="number" name="amount" required />
+  <label for="transaction_id">Transaction ID:</label>
+  <input type="text" name="transaction_id" required />
+  <button type="submit">Submit Payment</button>
+</form>
+{% endblock %}

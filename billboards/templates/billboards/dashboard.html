@@ -1,0 +1,84 @@
+{% extends 'billboards/base.html' %}
+
+{% block content %}
+<h2>Dashboard</h2>
+
+<!-- Filter Section -->
+<form method="get">
+    <div>
+        <label for="location">Filter by Location:</label>
+        <input type="text" id="location" name="location" value="{{ location_query }}" placeholder="Enter location">
+    </div>
+
+    <div>
+        <label for="company">Filter by Company:</label>
+        <input type="text" id="company" name="company" value="{{ company_query }}" placeholder="Enter company name">
+    </div>
+
+    <div>
+        <label for="payment_status">Filter by Payment Status:</label>
+        <select id="payment_status" name="payment_status">
+            <option value="">-- Select Status --</option>
+            <option value="paid" {% if payment_status == 'paid' %}selected{% endif %}>Paid</option>
+            <option value="unpaid" {% if payment_status == 'unpaid' %}selected{% endif %}>Unpaid</option>
+        </select>
+    </div>
+
+    <button type="submit">Apply Filters</button>
+    <a href="{% url 'dashboard' %}">Clear Filters</a>
+</form>
+
+<!-- Billboards Table -->
+<section>
+    <h3>Billboards</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Location</th>
+                <th>Geographical Coordinates</th>
+                <th>Company</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for billboard in billboards %}
+            <tr>
+                <td>{{ billboard.location }}</td>
+                <td>
+                    {% if billboard.coordinates %}
+                        <a href="https://www.google.com/maps?q={{ billboard.coordinates }}" target="_blank">
+                            {{ billboard.coordinates }}
+                        </a>
+                    {% else %}
+                        <a href="{% url 'add_coordinates' billboard.id %}">Add Coordinates</a>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if billboard.rented_by %}
+                        {{ billboard.rented_by.name }}
+                    {% else %}
+                        Unrented
+                    {% endif %}
+                </td>
+                <td>
+                    {% if billboard.is_paid %}
+                        Paid
+                    {% else %}
+                        Unpaid
+                    {% endif %}
+                </td>
+                <td>
+                    {% if not billboard.is_paid %}
+                    <form action="{% url 'mark_paid' billboard.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Mark as Paid</button>
+                    </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}

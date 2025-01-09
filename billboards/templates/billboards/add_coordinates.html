@@ -1,0 +1,17 @@
+{% extends 'billboards/base.html' %} {% block content %}
+<h2>Add Coordinates for {{ billboard.location }}</h2>
+<form method="post">
+  {% csrf_token %}
+  <label for="coordinates"
+    >Geographical Coordinates (latitude,longitude):</label
+  >
+  <input
+    type="text"
+    id="coordinates"
+    name="coordinates"
+    value="{{ billboard.coordinates }}"
+    required
+  />
+  <button type="submit">Save</button>
+</form>
+{% endblock %}
