@@ -24,23 +24,3 @@ SQLite	Database for storing billboard information
 Heroku	Deployment platform
 Google Maps API	Display billboard locations
 
-📂 Project Structure
-
-billboard_manager/
-├── billboard_manager/    # Django project settings
-│   ├── settings.py       # Configuration file
-│   ├── urls.py           # Main URL routes
-│   ├── wsgi.py           # WSGI deployment entry point
-│   ├── asgi.py           # ASGI deployment entry point
-├── billboards/           # Main Django app
-│   ├── migrations/       # Database migrations
-│   ├── templates/        # HTML templates
-│   ├── static/           # Static files (CSS, images)
-│   ├── models.py         # Database models
-│   ├── views.py          # Business logic
-│   ├── urls.py           # App-specific routes
-│   ├── forms.py          # Django forms
-│   ├── admin.py          # Admin panel configuration
-├── manage.py             # Django CLI tool
-├── db.sqlite3            # Database file (for local development)
-└── requirements.txt      # List of dependencies
